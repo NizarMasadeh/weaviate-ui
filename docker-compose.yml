@@ -1,0 +1,26 @@
+services:
+  weaviate-explorer:
+    build: .
+    image: weaviate-explorer:latest
+    container_name: weaviate-explorer
+    restart: unless-stopped
+    ports:
+      # remove this if you only expose via Traefik
+      - "8088:8080"
+    # ---- Traefik labels (you're already running Traefik for the weaviate domain) ----
+    # Uncomment + adjust to put it behind a domain with TLS.
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.wv-explorer.rule=Host(`explorer.weaviate-url`)"
+    #   - "traefik.http.routers.wv-explorer.entrypoints=websecure"
+    #   - "traefik.http.routers.wv-explorer.tls.certresolver=myresolver"
+    #   - "traefik.http.services.wv-explorer.loadbalancer.server.port=8080"
+    #   # optional: lock it down with basic-auth so it isn't public
+    #   - "traefik.http.routers.wv-explorer.middlewares=wv-auth"
+    #   - "traefik.http.middlewares.wv-auth.basicauth.users=admin:$$apr1$$....."  # htpasswd, escape $ as $$
+    # networks:
+    #   - proxy
+
+# networks:
+#   proxy:
+#     external: true
